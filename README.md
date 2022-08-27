@@ -2,7 +2,7 @@
 A simple Weather App created with React<br>
 The hosted version can be found [HERE](https://ap-mausam.herokuapp.com/).
 
-<img src="relative/path/in/repository/mausam/123.png" width="128"/>
+![alt text](https://github.com/AdityaPote/mausam/blob/main/1234.png?raw=true)
 
 ## Functionality
 Real Time Weather App
