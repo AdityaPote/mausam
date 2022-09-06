@@ -27,11 +27,6 @@ Front-end: React<br>
 Frontend Repo can be found [HERE](https://github.com/AdityaPote/mausam)
 Browse to http://localhost:3000/, signin/register, and upload an image!
 
-## Usage
-1. You can login using these credentials:
-- Email: `test@test.com`
-- Password: `test123`
-
 
 
 
