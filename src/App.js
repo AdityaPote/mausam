@@ -1,32 +1,46 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 
 function App() {
-  const [data, setData] = useState({})
-  const [location, setLocation] = useState('')
+  const [data, setData] = useState({});
+  const [location, setLocation] = useState("");
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=68ba385d2336d267f4fa0456df11af4a`
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=68ba385d2336d267f4fa0456df11af4a`;
 
+  useEffect(() => {
+    if (location === "") {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=68ba385d2336d267f4fa0456df11af4a`;
+        axios.get(url).then((res) => {
+          setData(res.data);
+        });
+      });
+    }
+  }, [location]);
 
   const searchLocation = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       axios.get(url).then((response) => {
-        setData(response.data)
-        console.log(response.data)
-      })
-      setLocation('')
+        setData(response.data);
+        console.log(response.data);
+      });
+      setLocation("");
     }
-  }
+  };
 
   return (
     <div className="app">
       <div className="search">
         <input
           value={location}
-          onChange={event => setLocation(event.target.value)}
+          onChange={(event) => setLocation(event.target.value)}
           onKeyPress={searchLocation}
-          placeholder='Enter Location'
-          type="text" />
+          placeholder="Enter Location"
+          type="text"
+        />
       </div>
       <div className="container">
         <div className="top">
@@ -41,35 +55,32 @@ function App() {
           </div>
         </div>
 
-        {data.name !== undefined &&
+        {data.name !== undefined && (
           <div className="bottom">
             <div className="feels">
-              {data.main ? <p className='bold'>{data.main.feels_like.toFixed()}°F</p> : null}
+              {data.main ? (
+                <p className="bold">{data.main.feels_like.toFixed()}°F</p>
+              ) : null}
               <p>Feels Like</p>
             </div>
             <div className="humidity">
-              {data.main ? <p className='bold'>{data.main.humidity}%</p> : null}
+              {data.main ? <p className="bold">{data.main.humidity}%</p> : null}
               <p>Humidity</p>
             </div>
             <div className="wind">
-              {data.wind ? <p className='bold'>{data.wind.speed.toFixed()} MPH</p> : null}
+              {data.wind ? (
+                <p className="bold">{data.wind.speed.toFixed()} MPH</p>
+              ) : null}
               <p>Wind Speed</p>
             </div>
-           
           </div>
-        }
-            <div className="bot">
-            <p> Background📍IIITM,Gwalior</p>
-            </div>
-
-
-
+        )}
+        <div className="bot">
+          <p> Background📍IIITM,Gwalior</p>
+        </div>
       </div>
     </div>
   );
 }
 
 export default App;
-
-
-
